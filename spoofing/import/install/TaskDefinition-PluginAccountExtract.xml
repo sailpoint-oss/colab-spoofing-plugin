@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition executor="sailpoint.mcspoofing.task.ExtractAccountData" name="MCPlugin Account Extract" progressInterval="5000" progressMode="String" resultAction="Rename" subType="task_item_type_generic" template="true" type="Generic">
+  <Description>Extract account data using SpoofingPlugin class</Description>
+  <Attributes>
+    <Map>
+      <entry key="pluginName" value="MCSpoofingPlugin"/>
+    </Map>
+  </Attributes>
+  <Signature>
+    <Inputs>
+      <Argument helpKey="Select only one application" name="applications" required="true" type="Application">
+        <Prompt>Select one application</Prompt>
+      </Argument>
+      <Argument helpKey="Comma separated list of params to write, leave blank for write all. MUST start with nativeIdentity" name="schemaParams" type="string">
+        <Prompt>Parameter List</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to write all schema parameters to the Task Result" name="printSchema" type="boolean">
+        <Prompt>Print Schema Params</Prompt>
+      </Argument>
+      <Argument helpKey="Select one or more Identities which have an account on this application" multi="true" name="identities" type="Identity">
+        <Prompt>Select one or more Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Select this checkbox to ignore identity selection and export all accounts" name="selectall" type="boolean">
+        <Prompt>Select all accounts (overrides identity selection)</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to only consider active identities" name="onlyActiveIdentities" type="boolean">
+        <Prompt>Only Active Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to only consider correlated identities" name="onlyCorrelatedIdentities" type="boolean">
+        <Prompt>Only Correlated Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Folder path for output, can include $applicationName$ , $date$,  default is D:\ExtractData" name="folderpath" type="string">
+        <Prompt>Enter folder path for output file</Prompt>
+      </Argument>
+      <Argument helpKey="Output filename, can include $applicationName$ , $date$, $identityName$ , $attribute$ or leave blank for defaults" name="filename" type="string">
+        <Prompt>Enter filename for output file</Prompt>
+      </Argument>
+    </Inputs>
+    <Returns>
+      <Argument name="applications" type="string">
+        <Prompt>Application Selected</Prompt>
+      </Argument>
+      <Argument name="total" type="int">
+        <Prompt>Total accounts written</Prompt>
+      </Argument>
+      <Argument name="resultString" type="string">
+        <Prompt>Results</Prompt>
+      </Argument>
+    </Returns>
+  </Signature>
+</TaskDefinition>
