@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Plugin PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Plugin certificationLevel="None"
+        name="MCSpoofingPlugin"
+        displayName="MC Spoofing Plugin"
+        minSystemVersion="7.2"
+        maxSystemVersion="8.4"
+        version="1.0.1">
+    <Attributes>
+      <Map>
+        <entry key="minUpgradableVersion" value="1.0.0"/>
+        <entry key="taskExecutors">
+          <value>
+            <List>
+              <String>sailpoint.mcspoofing.task.AggregateAccountData</String>
+              <String>sailpoint.mcspoofing.task.ExtractAccountData</String>
+              <String>sailpoint.mcspoofing.task.ExtractIdentityData</String>
+              <String>sailpoint.mcspoofing.task.CompareAccountData</String>
+              <String>sailpoint.mcspoofing.task.SearchAccountData</String>
+              <String>sailpoint.mcspoofing.task.TargetAggregation</String>
+            </List>
+          </value>
+        </entry>
+        <entry key="settings">
+          <value>
+            <List>
+              <Setting dataType="boolean" helpText="Use SQL for searches when possible"
+                label="Use SQL Commands" name="useSQL" defaultValue="true"/>
+            </List>
+          </value>
+        </entry>
+
+      </Map>
+    </Attributes>
+</Plugin>
