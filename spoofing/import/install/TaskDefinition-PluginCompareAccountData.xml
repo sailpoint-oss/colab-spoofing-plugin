@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition executor="sailpoint.mcspoofing.task.CompareAccountData" name="MCPlugin Compare Account Data" progressInterval="5000" progressMode="String" resultAction="Rename" subType="task_item_type_generic" template="true" type="Generic">
+  <Description>
+    Compare accounts on two or more applications
+  </Description>
+  <Attributes>
+    <Map>
+      <entry key="pluginName" value="MCSpoofingPlugin"/>
+    </Map>
+  </Attributes>
+  <Signature>
+    <Inputs>
+      <Argument helpKey="Select applications to compare" multi="true" name="applications" type="Application">
+        <Prompt>Applications to compare</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to OR the applications, default is to AND them" name="anyOfThese" type="boolean">
+        <Prompt>Any of these</Prompt>
+      </Argument>
+      <Argument helpKey="Select the Custom object containing comparison map" name="compareMap" type="string">
+        <Prompt>Comparison Map</Prompt>
+      </Argument>
+      <Argument helpKey="Select one or more Identities to compare" multi="true" name="identities" type="Identity">
+        <Prompt>Select one or more Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Select this checkbox to ignore identity selection and compare all accounts" name="selectall" type="boolean">
+        <Prompt>Select all accounts (overrides identity selection)</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to only consider active identities" name="onlyActiveIdentities" type="boolean">
+        <Prompt>Only Active Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to only consider correlated identities" name="onlyCorrelatedIdentities" type="boolean">
+        <Prompt>Only Correlated Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Overlay (AND) above with this filter (from advanced search)" name="filterString" type="string">
+        <Prompt>Filter</Prompt>
+      </Argument>
+      <Argument helpKey="Provide a field to order by, default is name. Add :desc to order descending" name="orderby" type="string">
+        <Prompt>OrderBy</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to save all data to the spreadsheet, default is to only save differences" name="showAllData" type="boolean">
+        <Prompt>Show all data</Prompt>
+      </Argument>
+      <Argument helpKey="Folder path for output, can include $date$, default is C:\CompareData" name="folderpath" type="string">
+        <Prompt>Enter folder path for output file</Prompt>
+      </Argument>
+      <Argument helpKey="Output filename, can include $date$, leave blank for defaults" name="filename" type="string">
+        <Prompt>Enter filename for output file</Prompt>
+      </Argument>
+      <Argument helpKey="Email results to:" name="resultsOutput" type="string">
+        <Prompt>Email output to:</Prompt>
+      </Argument>
+    </Inputs>
+    <Returns>
+      <Argument name="totalCount" type="int">
+        <Prompt>Account</Prompt>
+      </Argument>
+      <Argument name="resultString" type="string">
+        <Prompt>Results</Prompt>
+      </Argument>
+    </Returns>
+  </Signature>
+</TaskDefinition>
