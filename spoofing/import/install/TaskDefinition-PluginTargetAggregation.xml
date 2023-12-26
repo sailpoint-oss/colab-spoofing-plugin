@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition executor="sailpoint.mcspoofing.task.TargetAggregation" name="MCPlugin Target Aggregation" progressInterval="5000" progressMode="String" resultAction="Rename" subType="task_item_type_generic" template="true" type="Generic">
+  <Description>Target Aggregation of a single account</Description>
+  <Attributes>
+    <Map>
+      <entry key="pluginName" value="MCSpoofingPlugin"/>
+    </Map>
+  </Attributes>
+  <Signature>
+    <Inputs>
+      <Argument helpKey="Select only one application" name="applications" required="true" type="Application">
+        <Prompt>Select one application</Prompt>
+      </Argument>
+      <Argument helpKey="Specify the user Identity - user must have a correlated account" name="identities" type="Identity">
+        <Prompt>Specify Identity</Prompt>
+      </Argument>
+      <Argument helpKey="Specify the accounts native Identity value" name="nativeIdentity" type="string">
+        <Prompt>Specify account Native Identity</Prompt>
+      </Argument>
+      <Argument helpKey="help_task_no_optimize_reagg" name="noOptimizeReaggregation" type="boolean">
+        <Prompt>task_in_account_aggregation_no_optimize_reagg</Prompt>
+      </Argument>
+    </Inputs>
+    <Returns>
+      <Argument name="applications" type="string">
+        <Prompt>task_out_account_aggregation_applications</Prompt>
+      </Argument>
+      <Argument name="total" type="int">
+        <Prompt>task_out_account_aggregation_total</Prompt>
+      </Argument>
+      <Argument name="ignored" type="int">
+        <Prompt>task_out_account_aggregation_ignored</Prompt>
+      </Argument>
+      <Argument name="optimized" type="int">
+        <Prompt>task_out_account_aggregation_optimized</Prompt>
+      </Argument>
+      <Argument name="created" type="int">
+        <Prompt>task_out_account_aggregation_created</Prompt>
+      </Argument>
+      <Argument name="updated" type="int">
+        <Prompt>task_out_account_aggregation_updated</Prompt>
+      </Argument>
+      <Argument name="deleted" type="int">
+        <Prompt>task_out_account_aggregation_deleted</Prompt>
+      </Argument>
+      <Argument name="managerChanges" type="int">
+        <Prompt>task_out_account_aggregation_manager_changes</Prompt>
+      </Argument>
+      <Argument name="detectedRoleChanges" type="int">
+        <Prompt>task_out_account_aggregation_business_role_changes</Prompt>
+      </Argument>
+      <Argument name="exceptionChanges" type="int">
+        <Prompt>task_out_account_aggregation_exception_changes</Prompt>
+      </Argument>
+      <Argument name="policies" type="string">
+        <Prompt>task_out_account_aggregation_policies</Prompt>
+      </Argument>
+      <Argument name="policyViolations" type="int">
+        <Prompt>task_out_account_aggregation_policy_violations</Prompt>
+      </Argument>
+      <Argument name="policyNotifications" type="int">
+        <Prompt>task_out_account_aggregation_policy_notifications</Prompt>
+      </Argument>
+      <Argument name="scoresChanged" type="int">
+        <Prompt>task_out_account_aggregation_scores_changed</Prompt>
+      </Argument>
+      <Argument name="snapshotsCreated" type="int">
+        <Prompt>task_out_account_aggregation_snapshots_created</Prompt>
+      </Argument>
+      <Argument name="scopesCreated" type="int">
+        <Prompt>task_out_account_aggregation_scopes_created</Prompt>
+      </Argument>
+      <Argument name="scopesCorrelated" type="int">
+        <Prompt>task_out_account_aggregation_scopes_correlated</Prompt>
+      </Argument>
+      <Argument name="scopesSelected" type="int">
+        <Prompt>task_out_account_aggregation_scopes_selected</Prompt>
+      </Argument>
+      <Argument name="scopesDormant" type="int">
+        <Prompt>task_out_account_aggregation_scopes_dormant</Prompt>
+      </Argument>
+      <Argument name="unscopedIdentities" type="int">
+        <Prompt>task_out_account_aggregation_unscoped_identities</Prompt>
+      </Argument>
+      <Argument name="certificationsCreated" type="int">
+        <Prompt>task_out_account_aggregation_certifications_created</Prompt>
+      </Argument>
+      <Argument name="certificationsDeleted" type="int">
+        <Prompt>task_out_account_aggregation_certifications_deleted</Prompt>
+      </Argument>
+      <Argument name="applicationsGenerated" type="int">
+        <Prompt>task_out_account_aggregation_applications_generated</Prompt>
+      </Argument>
+      <Argument name="managedAttributesCreated" type="int">
+        <Prompt>task_out_account_aggregation_managed_attributes_promoted</Prompt>
+      </Argument>
+      <Argument name="managedAttributesCreatedByApplication" type="string">
+        <Prompt>task_out_account_aggregation_managed_attributes_promoted_by_app</Prompt>
+      </Argument>
+      <Argument name="identityEntitlementsCreated" type="int">
+        <Prompt>task_out_account_aggregation_identityEntitlements_created</Prompt>
+      </Argument>
+      <Argument name="resultString" type="string">
+        <Prompt>Results</Prompt>
+      </Argument>
+    </Returns>
+  </Signature>
+</TaskDefinition>

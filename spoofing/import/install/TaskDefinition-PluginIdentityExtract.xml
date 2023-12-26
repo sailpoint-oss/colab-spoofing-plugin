@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition executor="sailpoint.mcspoofing.task.ExtractIdentityData" name="MCPlugin Identity Extract" progressInterval="5000" progressMode="String" resultAction="Rename" subType="task_item_type_generic" template="true" type="Generic">
+  <Description>Extract identity data using TasksPlugin class</Description>
+  <Attributes>
+    <Map>
+      <entry key="pluginName" value="MCSpoofingPlugin"/>
+    </Map>
+  </Attributes>
+  <Signature>
+    <Inputs>
+      <Argument helpKey="Select one or more Identities for individual extract" multi="true" name="identities" type="Identity">
+        <Prompt>Select one or more Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Select this checkbox to ignore identity selection and export all accounts/identities" name="selectall" type="boolean">
+        <Prompt>Select all accounts (overrides identity selection)</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to only pull active identities" name="onlyActiveIdentities" type="boolean">
+        <Prompt>Only Pull Active Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to only pull correlated identities" name="onlyCorrelatedIdentities" type="boolean">
+        <Prompt>Only Pull Correlated Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Specify a list of identity types, comma separated" name="onlyTheseTypes" type="string">
+        <Prompt>Only Pull these Identity Types</Prompt>
+      </Argument>
+      <Argument helpKey="Comma separated list of attributes to write, leave blank for write all. MUST start with name" name="schemaParams" type="string">
+        <Prompt>Attribute List</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to write all identity attributes to the Task Result" name="printSchema" type="boolean">
+        <Prompt>Print attributes</Prompt>
+      </Argument>
+      <Argument helpKey="Select applications, to limit to identities with these links" name="applications" multi="true" type="Application">
+        <Prompt>Select application links to filter on</Prompt>
+      </Argument>
+      <Argument helpKey="Overlay (AND) above with this filter (from advanced search)" name="filterString" type="string">
+        <Prompt>Filter</Prompt>
+      </Argument>
+      <Argument helpKey="Specify a comma separated list of attributes to exclude on the output, use type:identity to exclude all identity values, type:string to exclude all strings, etc" name="excludeList" type="string">
+        <Prompt>Excludes</Prompt>
+      </Argument>
+      <Argument helpKey="Specify a comma separated list of attributes to include on the output. Applied after excludes" name="includeList" type="string">
+        <Prompt>Includes</Prompt>
+      </Argument>
+      <Argument helpKey="Provide a field to order by, default is name. Add :desc to order descending" name="orderby" type="string">
+        <Prompt>OrderBy</Prompt>
+      </Argument>
+      <Argument helpKey="Folder path for output, can include $applicationName$ , $date$,  default is D:\ExtractData" name="folderpath" type="string">
+        <Prompt>Enter folder path for output file</Prompt>
+      </Argument>
+      <Argument helpKey="Output filename, can include $applicationName$ , $date$, $identityName$ , $attribute$ or leave blank for defaults" name="filename" type="string">
+        <Prompt>Enter filename for output file</Prompt>
+      </Argument>
+    </Inputs>
+    <Returns>
+      <Argument name="applications" type="string">
+        <Prompt>Application Selected</Prompt>
+      </Argument>
+      <Argument name="total" type="int">
+        <Prompt>Total accounts written</Prompt>
+      </Argument>
+      <Argument name="resultString" type="string">
+        <Prompt>Results</Prompt>
+      </Argument>
+    </Returns>
+  </Signature>
+</TaskDefinition>
