@@ -9,7 +9,7 @@
 [release-shield]: https://img.shields.io/github/v/release/sailpoint-oss/colab-spoofing-plugin?label=Current%20Release
 [contributor-shield]:https://img.shields.io/github/contributors/sailpoint-oss/colab-spoofing-plugin?label=Contributors
 
-# application-title-here
+# Spoofing Plugin
 [Explore the docs »](https://developer.sailpoint.com/discuss/t/spoofing-plugin/23554)
 
 [New to the CoLab? Click here »](https://developer.sailpoint.com/discuss/t/about-the-sailpoint-developer-community-colab/11230)
