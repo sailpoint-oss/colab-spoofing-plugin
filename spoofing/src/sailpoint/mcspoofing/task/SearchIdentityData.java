@@ -659,54 +659,54 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
               // Ignore case and nulls
               // Ignore nulls means that the values must be populated
               if(!whereAdded) {
-                outerQuery += " where a."+fieldName.toLowerCase()+" IS NOT NULL";
+                outerQuery += " where a."+fieldNameDBName+" IS NOT NULL";
                 whereAdded=true;
               }
               else {
-                outerQuery += " and a."+fieldName.toLowerCase()+" IS NOT NULL";
+                outerQuery += " and a."+fieldNameDBName+" IS NOT NULL";
               }
-              outerQuery += " and a."+compareField.toLowerCase()+" IS NOT NULL";
-              outerQuery += " and "+stringLengthFunction+"(a."+fieldName.toLowerCase()+") > 0";
-              outerQuery += " and "+stringLengthFunction+"(a."+compareField.toLowerCase()+") > 0";
+              outerQuery += " and a."+compareFieldDBName+" IS NOT NULL";
+              outerQuery += " and "+stringLengthFunction+"(a."+fieldNameDBName+") > 0";
+              outerQuery += " and "+stringLengthFunction+"(a."+compareFieldDBName+") > 0";
               if(Util.isNotNullOrEmpty(searchValue)) {
-                outerQuery+=" and upper(a."+fieldName.toLowerCase()+") = upper(?)";
+                outerQuery+=" and upper(a."+fieldNameDBName+") = upper(?)";
               }
-              outerQuery += " and upper(a."+fieldName.toLowerCase()+") <> upper(a."+compareField.toLowerCase()+")";
+              outerQuery += " and upper(a."+fieldNameDBName+") <> upper(a."+compareFieldDBName+")";
             }
             else {
               if(!whereAdded) {
-                outerQuery += " where a."+fieldName.toLowerCase()+" IS NOT NULL";
+                outerQuery += " where a."+fieldNameDBName+" IS NOT NULL";
                 whereAdded=true;
               }
               else {
-                outerQuery += " and a."+fieldName.toLowerCase()+" IS NOT NULL";
+                outerQuery += " and a."+fieldNameDBName+" IS NOT NULL";
               }
-              outerQuery += " and a."+compareField.toLowerCase()+" IS NOT NULL";
-              outerQuery += " and "+stringLengthFunction+"(a."+fieldName.toLowerCase()+") > 0";
-              outerQuery += " and "+stringLengthFunction+"(a."+compareField.toLowerCase()+") > 0";
+              outerQuery += " and a."+compareFieldDBName+" IS NOT NULL";
+              outerQuery += " and "+stringLengthFunction+"(a."+fieldNameDBName+") > 0";
+              outerQuery += " and "+stringLengthFunction+"(a."+compareFieldDBName+") > 0";
               if(Util.isNotNullOrEmpty(searchValue)) {
-                outerQuery+=" and a."+fieldName.toLowerCase()+" = ?";
+                outerQuery+=" and a."+fieldNameDBName+" = ?";
               }
-              outerQuery += " and a."+fieldName.toLowerCase()+" <> a."+compareField.toLowerCase();
+              outerQuery += " and a."+fieldNameDBName+" <> a."+compareFieldDBName;
             }
           }
           else {
             if(ignoreCase) {
               if(!whereAdded) {
-                outerQuery += " where upper(a."+fieldName.toLowerCase()+") <> upper(a."+compareField.toLowerCase()+")";
+                outerQuery += " where upper(a."+fieldNameDBName+") <> upper(a."+compareFieldDBName+")";
                 whereAdded=true;
               }
               else {
-                outerQuery += " and upper(a."+fieldName.toLowerCase()+") <> upper(a."+compareField.toLowerCase()+")";
+                outerQuery += " and upper(a."+fieldNameDBName+") <> upper(a."+compareFieldDBName+")";
               }
             }
             else {
               if(!whereAdded) {
-                outerQuery += " where a."+fieldName.toLowerCase()+" <> a."+compareField.toLowerCase();
+                outerQuery += " where a."+fieldNameDBName+" <> a."+compareFieldDBName;
                 whereAdded=true;
               }
               else {
-                outerQuery += " and a."+fieldName.toLowerCase()+" <> a."+compareField.toLowerCase();
+                outerQuery += " and a."+fieldNameDBName+" <> a."+compareFieldDBName;
               }
             }
           }
@@ -718,41 +718,41 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
           else if("ISNULL".equalsIgnoreCase(searchValue)) {
             log.debug("SID-114 searchValue specified as ISNULL or isnull");
             if(!whereAdded) {
-              outerQuery+=" where ( ( a."+fieldName.toLowerCase()+" IS NULL ) or ( "+stringLengthFunction+"(a."+fieldName.toLowerCase()+") = 0 ) )";
+              outerQuery+=" where ( ( a."+fieldNameDBName+" IS NULL ) or ( "+stringLengthFunction+"(a."+fieldNameDBName+") = 0 ) )";
               whereAdded=true;
             }
             else {
-              outerQuery+=" and ( ( b."+fieldName.toLowerCase()+" IS NULL ) or ( "+stringLengthFunction+"(b."+fieldName.toLowerCase()+") = 0 ) )";
+              outerQuery+=" and ( ( a."+fieldNameDBName+" IS NULL ) or ( "+stringLengthFunction+"(a."+fieldNameDBName+") = 0 ) )";
             }
           }
           else if("ISNOTNULL".equalsIgnoreCase(searchValue)) {
             log.debug("SID-114 searchValue specified as ISNOTNULL or isnotnull");
             if(!whereAdded) {
-              outerQuery+=" where ( ( a."+fieldName.toLowerCase()+" IS NOT NULL ) and ( "+stringLengthFunction+"(a."+fieldName.toLowerCase()+") > 0 ) )";
+              outerQuery+=" where ( ( a."+fieldNameDBName+" IS NOT NULL ) and ( "+stringLengthFunction+"(a."+fieldNameDBName+") > 0 ) )";
               whereAdded=true;
             }
             else {
-              outerQuery+=" and ( ( a."+fieldName.toLowerCase()+" IS NOT NULL ) and ( "+stringLengthFunction+"(a."+fieldName.toLowerCase()+") > 0 ) )";
+              outerQuery+=" and ( ( a."+fieldNameDBName+" IS NOT NULL ) and ( "+stringLengthFunction+"(a."+fieldNameDBName+") > 0 ) )";
             }
           }
           else {
             if(ignoreCase) {
               if(!whereAdded) {
-                outerQuery+=" where upper(a."+fieldName.toLowerCase()+") = upper(?)";
+                outerQuery+=" where upper(a."+fieldNameDBName+") = upper(?)";
                 whereAdded=true;
               }
               else {
-                outerQuery+=" and upper(a."+fieldName.toLowerCase()+") = upper(?)";
+                outerQuery+=" and upper(a."+fieldNameDBName+") = upper(?)";
               }
               log.debug("SID-115 added case insensitive field name search");
             }
             else {
               if(!whereAdded) {
-                outerQuery+=" where a."+fieldName.toLowerCase()+" = ?";
+                outerQuery+=" where a."+fieldNameDBName+" = ?";
                 whereAdded=true;
               }
               else {
-                outerQuery+=" and a."+fieldName.toLowerCase()+" = ?";
+                outerQuery+=" and a."+fieldNameDBName+" = ?";
               }
               log.debug("SID-116 added case sensitive field name search");
             }
@@ -1880,7 +1880,7 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
       }
       dbfield=dbfield+fieldChars[ic];
     }
-    return dbfield;
+    return dbfield.toLowerCase();
   }
   public boolean terminate() {
     terminate=true;
