@@ -5,7 +5,7 @@
         displayName="MC Spoofing Plugin"
         minSystemVersion="7.2"
         maxSystemVersion="8.4"
-        version="1.0.1">
+        version="1.0.2">
     <Attributes>
       <Map>
         <entry key="minUpgradableVersion" value="1.0.0"/>
@@ -17,6 +17,7 @@
               <String>sailpoint.mcspoofing.task.ExtractIdentityData</String>
               <String>sailpoint.mcspoofing.task.CompareAccountData</String>
               <String>sailpoint.mcspoofing.task.SearchAccountData</String>
+              <String>sailpoint.mcspoofing.task.SearchIdentityData</String>
               <String>sailpoint.mcspoofing.task.TargetAggregation</String>
             </List>
           </value>

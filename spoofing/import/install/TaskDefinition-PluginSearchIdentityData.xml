@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition executor="sailpoint.mcspoofing.task.SearchIdentityData" name="MCPlugin Search Identity Data" progressInterval="5000" progressMode="String" resultAction="Rename" subType="task_item_type_generic" template="true" type="Generic">
+  <Description>
+    Search for a identity value
+  </Description>
+  <Attributes>
+    <Map>
+      <entry key="pluginName" value="MCSpoofingPlugin"/>
+    </Map>
+  </Attributes>
+  <Signature>
+    <Inputs>
+      <Argument helpKey="Select the field name to search for" name="fieldName" type="string">
+        <Prompt>Search Field</Prompt>
+      </Argument>
+      <Argument helpKey="Value to look for" name="searchValue" type="string">
+        <Prompt>Search Value</Prompt>
+      </Argument>
+      <Argument helpKey="Do you want to ignore case in the search" name="ignoreCase" type="boolean">
+        <Prompt>Ignore Case</Prompt>
+      </Argument>
+      <Argument helpKey="Enter a value here to just compare against this field" name="compareField" type="string">
+        <Prompt>Compare Field</Prompt>
+      </Argument>
+      <Argument helpKey="Do you want to ignore nulls in the search" name="ignoreNulls" type="boolean">
+        <Prompt>Ignore Nulls</Prompt>
+      </Argument>
+      <Argument helpKey="Enter an attribute here to change values on." name="newAttribute" type="string">
+        <Prompt>New Attribute</Prompt>
+      </Argument>
+      <Argument helpKey="Enter a value here to change these values to.  Preface with all: to set all to this value even those that do not match, use value NULL to remove the entry" name="newValue" type="string">
+        <Prompt>New Value</Prompt>
+      </Argument>
+      <Argument helpKey="Multiple search field specs, use op and logic" name="multiSearch" type="string">
+        <Prompt>Multiple Specs</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to only consider active identities" name="onlyActiveIdentities" type="boolean">
+        <Prompt>Only Active Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Check this to only consider correlated identities" name="onlyCorrelatedIdentities" type="boolean">
+        <Prompt>Only Correlated Identities</Prompt>
+      </Argument>
+      <Argument helpKey="Do you want to generate a histogram of values" name="genHistogram" type="boolean">
+        <Prompt>Generate Histogram</Prompt>
+      </Argument>
+      <Argument helpKey="How to sort the histogram data. Enter asc, desc, or value.  Default is desc." name="histoSort" type="string">
+        <Prompt>Histogram sort</Prompt>
+      </Argument>
+      <Argument helpKey="Do you want to generate a list of identities" name="genIdentityList" type="boolean">
+        <Prompt>Generate Identity List</Prompt>
+      </Argument>
+      <Argument helpKey="Enter a number greater then one, to list every N'th identity, or specify %" name="listModulo" type="string">
+        <Prompt>Listing Modulo</Prompt>
+      </Argument>
+      <Argument helpKey="Generate a filter of identities for input to IdentityRefresh task" name="genIdentityFilter" type="boolean">
+        <Prompt>Generate Identity Filter</Prompt>
+      </Argument>
+    </Inputs>
+    <Returns>
+      <Argument name="totalCount" type="int">
+        <Prompt>Match Count</Prompt>
+      </Argument>
+      <Argument name="resultString" type="string">
+        <Prompt>Results</Prompt>
+      </Argument>
+    </Returns>
+  </Signature>
+</TaskDefinition>
