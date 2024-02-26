@@ -367,13 +367,25 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
     ObjectAttribute fieldNameAttribute=null;
     ObjectAttribute compareFieldAttribute=null;
     ObjectAttribute newAttributeAttribute=null;
+    /*
+     * Need to determine the names of the fields in the database.
+     */
+    String fieldNameDBName=fieldName;
+    String compareFieldDBName=compareField;
+    String newAttributeDBName=newAttribute;
+    //
     if(objMap.containsKey(fieldName)) {
       log.debug("SID-201 Found "+fieldName+" in the attribute map");
       fieldNameAttribute=objMap.get(fieldName);
       log.debug("SID-202 isNamedColumn="+fieldNameAttribute.isNamedColumn());
       log.debug("SID-203 isExtended="+fieldNameAttribute.isExtended());
-      if(fieldNameAttribute.isExtended()) {
-        log.debug("SID-204 extendedNumber="+fieldNameAttribute.getExtendedNumber());
+      if(fieldNameAttribute.isNamedColumn()) {
+        fieldNameDBName=generateDBFieldFromIdField(fieldName);
+      }
+      else if(fieldNameAttribute.isExtended()) {
+        int extendedNumber=fieldNameAttribute.getExtendedNumber();
+        log.debug("SID-204 extendedNumber="+extendedNumber);
+        fieldNameDBName="extended"+(Integer.valueOf(extendedNumber)).toString().trim();
       }
     }
     else {
@@ -388,8 +400,13 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
         compareFieldAttribute=objMap.get(compareField);
         log.debug("SID-212 isNamedColumn="+compareFieldAttribute.isNamedColumn());
         log.debug("SID-213 isExtended="+compareFieldAttribute.isExtended());
-        if(compareFieldAttribute.isExtended()) {
-          log.debug("SID-214 extendedNumber="+compareFieldAttribute.getExtendedNumber());
+        if(compareFieldAttribute.isNamedColumn()) {
+          compareFieldDBName=generateDBFieldFromIdField(compareField);
+        }
+        else if(compareFieldAttribute.isExtended()) {
+          int extendedNumber=compareFieldAttribute.getExtendedNumber();
+          log.debug("SID-214 extendedNumber="+extendedNumber);
+          compareFieldDBName="extended"+(Integer.valueOf(extendedNumber)).toString().trim();
         }
       }
       else {
@@ -405,8 +422,13 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
         newAttributeAttribute=objMap.get(newAttribute);
         log.debug("SID-217 isNamedColumn="+newAttributeAttribute.isNamedColumn());
         log.debug("SID-218 isExtended="+newAttributeAttribute.isExtended());
-        if(newAttributeAttribute.isExtended()) {
-          log.debug("SID-219 extendedNumber="+newAttributeAttribute.getExtendedNumber());
+        if(newAttributeAttribute.isNamedColumn()) {
+          newAttributeDBName=generateDBFieldFromIdField(newAttribute);
+        }
+        else if(newAttributeAttribute.isExtended()) {
+          int extendedNumber=newAttributeAttribute.getExtendedNumber();
+          log.debug("SID-219 extendedNumber="+extendedNumber);
+          newAttributeDBName="extended"+(Integer.valueOf(extendedNumber)).toString().trim();
         }
       }
       else {
@@ -475,13 +497,13 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
         outerQuery = "select a.id as id, a.name as name, a.display_name as display_name";
         outerQuery+= ", a.type as type, a.inactive as inactive, a.correlated as correlated";
         if(fieldNameAttribute.isNamedColumn()) {
-          log.debug("SID-221 Adding "+fieldName+" from named column");
-          outerQuery+=", a."+fieldName+" as "+fieldName.toLowerCase();
+          log.debug("SID-221 Adding "+fieldName+" from named column as "+fieldNameDBName);
+          outerQuery+=", a."+fieldNameDBName+" as "+fieldName.toLowerCase();
         }
         else if(fieldNameAttribute.isExtended()) {
           int extendedNumber=fieldNameAttribute.getExtendedNumber();
           log.debug("SID-222 Adding "+fieldName+" as extended"+extendedNumber);
-          outerQuery+=", a.extended"+extendedNumber+" as "+fieldName.toLowerCase();
+          outerQuery+=", a."+fieldNameDBName+" as "+fieldName.toLowerCase();
         }
         else {
           log.debug("SID-223 Adding "+fieldName+" from the XML");
@@ -522,13 +544,13 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
          */
         if(Util.isNotNullOrEmpty(compareField)) {
           if(compareFieldAttribute.isNamedColumn()) {
-            log.debug("SID-231 Adding "+compareField+" from named column");
-            outerQuery+=", a."+compareField+" as "+compareField.toLowerCase();
+            log.debug("SID-231 Adding "+compareField+" from named column as "+compareFieldDBName);
+            outerQuery+=", a."+compareFieldDBName+" as "+compareField.toLowerCase();
           }
           else if(compareFieldAttribute.isExtended()) {
             int extendedNumber=compareFieldAttribute.getExtendedNumber();
             log.debug("SID-232 Adding "+compareField+" as extended"+extendedNumber);
-            outerQuery+=", a.extended"+extendedNumber+" as "+compareField.toLowerCase();
+            outerQuery+=", a."+compareFieldDBName+" as "+compareField.toLowerCase();
           }
           else {
             log.debug("SID-233 Adding "+compareField+" from the XML");
@@ -569,13 +591,13 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
          */
         if(setNewValue && Util.isNotNullOrEmpty(newAttribute)) {
           if(newAttributeAttribute.isNamedColumn()) {
-            log.debug("SID-241 Adding "+newAttribute+" from named column");
-            outerQuery+=", a."+newAttribute+" as "+newAttribute.toLowerCase();
+            log.debug("SID-241 Adding "+newAttribute+" from named column as "+newAttributeDBName);
+            outerQuery+=", a."+newAttributeDBName+" as "+newAttribute.toLowerCase();
           }
           else if(newAttributeAttribute.isExtended()) {
             int extendedNumber=newAttributeAttribute.getExtendedNumber();
             log.debug("SID-242 Adding "+newAttribute+" as extended"+extendedNumber);
-            outerQuery+=", a.extended"+extendedNumber+" as "+newAttribute.toLowerCase();
+            outerQuery+=", a."+newAttributeDBName+" as "+newAttribute.toLowerCase();
           }
           else {
             log.debug("SID-243 Adding "+newAttribute+" from the XML");
@@ -637,54 +659,54 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
               // Ignore case and nulls
               // Ignore nulls means that the values must be populated
               if(!whereAdded) {
-                outerQuery += " where a."+fieldName.toLowerCase()+" IS NOT NULL";
+                outerQuery += " where a."+fieldNameDBName+" IS NOT NULL";
                 whereAdded=true;
               }
               else {
-                outerQuery += " and a."+fieldName.toLowerCase()+" IS NOT NULL";
+                outerQuery += " and a."+fieldNameDBName+" IS NOT NULL";
               }
-              outerQuery += " and a."+compareField.toLowerCase()+" IS NOT NULL";
-              outerQuery += " and "+stringLengthFunction+"(a."+fieldName.toLowerCase()+") > 0";
-              outerQuery += " and "+stringLengthFunction+"(a."+compareField.toLowerCase()+") > 0";
+              outerQuery += " and a."+compareFieldDBName+" IS NOT NULL";
+              outerQuery += " and "+stringLengthFunction+"(a."+fieldNameDBName+") > 0";
+              outerQuery += " and "+stringLengthFunction+"(a."+compareFieldDBName+") > 0";
               if(Util.isNotNullOrEmpty(searchValue)) {
-                outerQuery+=" and upper(a."+fieldName.toLowerCase()+") = upper(?)";
+                outerQuery+=" and upper(a."+fieldNameDBName+") = upper(?)";
               }
-              outerQuery += " and upper(a."+fieldName.toLowerCase()+") <> upper(a."+compareField.toLowerCase()+")";
+              outerQuery += " and upper(a."+fieldNameDBName+") <> upper(a."+compareFieldDBName+")";
             }
             else {
               if(!whereAdded) {
-                outerQuery += " where a."+fieldName.toLowerCase()+" IS NOT NULL";
+                outerQuery += " where a."+fieldNameDBName+" IS NOT NULL";
                 whereAdded=true;
               }
               else {
-                outerQuery += " and a."+fieldName.toLowerCase()+" IS NOT NULL";
+                outerQuery += " and a."+fieldNameDBName+" IS NOT NULL";
               }
-              outerQuery += " and a."+compareField.toLowerCase()+" IS NOT NULL";
-              outerQuery += " and "+stringLengthFunction+"(a."+fieldName.toLowerCase()+") > 0";
-              outerQuery += " and "+stringLengthFunction+"(a."+compareField.toLowerCase()+") > 0";
+              outerQuery += " and a."+compareFieldDBName+" IS NOT NULL";
+              outerQuery += " and "+stringLengthFunction+"(a."+fieldNameDBName+") > 0";
+              outerQuery += " and "+stringLengthFunction+"(a."+compareFieldDBName+") > 0";
               if(Util.isNotNullOrEmpty(searchValue)) {
-                outerQuery+=" and a."+fieldName.toLowerCase()+" = ?";
+                outerQuery+=" and a."+fieldNameDBName+" = ?";
               }
-              outerQuery += " and a."+fieldName.toLowerCase()+" <> a."+compareField.toLowerCase();
+              outerQuery += " and a."+fieldNameDBName+" <> a."+compareFieldDBName;
             }
           }
           else {
             if(ignoreCase) {
               if(!whereAdded) {
-                outerQuery += " where upper(a."+fieldName.toLowerCase()+") <> upper(a."+compareField.toLowerCase()+")";
+                outerQuery += " where upper(a."+fieldNameDBName+") <> upper(a."+compareFieldDBName+")";
                 whereAdded=true;
               }
               else {
-                outerQuery += " and upper(a."+fieldName.toLowerCase()+") <> upper(a."+compareField.toLowerCase()+")";
+                outerQuery += " and upper(a."+fieldNameDBName+") <> upper(a."+compareFieldDBName+")";
               }
             }
             else {
               if(!whereAdded) {
-                outerQuery += " where a."+fieldName.toLowerCase()+" <> a."+compareField.toLowerCase();
+                outerQuery += " where a."+fieldNameDBName+" <> a."+compareFieldDBName;
                 whereAdded=true;
               }
               else {
-                outerQuery += " and a."+fieldName.toLowerCase()+" <> a."+compareField.toLowerCase();
+                outerQuery += " and a."+fieldNameDBName+" <> a."+compareFieldDBName;
               }
             }
           }
@@ -696,41 +718,41 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
           else if("ISNULL".equalsIgnoreCase(searchValue)) {
             log.debug("SID-114 searchValue specified as ISNULL or isnull");
             if(!whereAdded) {
-              outerQuery+=" where ( ( a."+fieldName.toLowerCase()+" IS NULL ) or ( "+stringLengthFunction+"(a."+fieldName.toLowerCase()+") = 0 ) )";
+              outerQuery+=" where ( ( a."+fieldNameDBName+" IS NULL ) or ( "+stringLengthFunction+"(a."+fieldNameDBName+") = 0 ) )";
               whereAdded=true;
             }
             else {
-              outerQuery+=" and ( ( b."+fieldName.toLowerCase()+" IS NULL ) or ( "+stringLengthFunction+"(b."+fieldName.toLowerCase()+") = 0 ) )";
+              outerQuery+=" and ( ( a."+fieldNameDBName+" IS NULL ) or ( "+stringLengthFunction+"(a."+fieldNameDBName+") = 0 ) )";
             }
           }
           else if("ISNOTNULL".equalsIgnoreCase(searchValue)) {
             log.debug("SID-114 searchValue specified as ISNOTNULL or isnotnull");
             if(!whereAdded) {
-              outerQuery+=" where ( ( a."+fieldName.toLowerCase()+" IS NOT NULL ) and ( "+stringLengthFunction+"(a."+fieldName.toLowerCase()+") > 0 ) )";
+              outerQuery+=" where ( ( a."+fieldNameDBName+" IS NOT NULL ) and ( "+stringLengthFunction+"(a."+fieldNameDBName+") > 0 ) )";
               whereAdded=true;
             }
             else {
-              outerQuery+=" and ( ( a."+fieldName.toLowerCase()+" IS NOT NULL ) and ( "+stringLengthFunction+"(a."+fieldName.toLowerCase()+") > 0 ) )";
+              outerQuery+=" and ( ( a."+fieldNameDBName+" IS NOT NULL ) and ( "+stringLengthFunction+"(a."+fieldNameDBName+") > 0 ) )";
             }
           }
           else {
             if(ignoreCase) {
               if(!whereAdded) {
-                outerQuery+=" where upper(a."+fieldName.toLowerCase()+") = upper(?)";
+                outerQuery+=" where upper(a."+fieldNameDBName+") = upper(?)";
                 whereAdded=true;
               }
               else {
-                outerQuery+=" and upper(a."+fieldName.toLowerCase()+") = upper(?)";
+                outerQuery+=" and upper(a."+fieldNameDBName+") = upper(?)";
               }
               log.debug("SID-115 added case insensitive field name search");
             }
             else {
               if(!whereAdded) {
-                outerQuery+=" where a."+fieldName.toLowerCase()+" = ?";
+                outerQuery+=" where a."+fieldNameDBName+" = ?";
                 whereAdded=true;
               }
               else {
-                outerQuery+=" and a."+fieldName.toLowerCase()+" = ?";
+                outerQuery+=" and a."+fieldNameDBName+" = ?";
               }
               log.debug("SID-116 added case sensitive field name search");
             }
@@ -1849,7 +1871,17 @@ public class SearchIdentityData extends BasePluginTaskExecutor {
     }
     return lockedId;
   }
-
+  private String generateDBFieldFromIdField(String field) {
+    String dbfield="";
+    char[] fieldChars=field.toCharArray();
+    for (int ic=0; ic<fieldChars.length; ic++) {
+      if(Character.isUpperCase(fieldChars[ic])) {
+        dbfield=dbfield+"_";
+      }
+      dbfield=dbfield+fieldChars[ic];
+    }
+    return dbfield.toLowerCase();
+  }
   public boolean terminate() {
     terminate=true;
     taskResult.setTerminated(true);
